@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>DEMO</title>
+    <link href={{url_for('static', filename="css/bootstrap.min.css")}} rel="stylesheet">
+    <link href={{url_for('static', filename="css/markdown.css")}} rel="stylesheet">
+</head>
+<body style="font-size: 14px;font-family:Microsoft YaHei;overflow-y:hidden;">
+    <textarea onscroll="document.getElementById('out').scrollTop = this.scrollTop;" class="col-xs-6" id="in" style="height:100%;resize: none;border: 0px;background-color: #ecf0f1"></textarea>
+    <div class="col-xs-6" style="background-color: #FDFFD0">
+        <div class="markdown-body" id="out" style="height:100%;overflow-y: auto;"></div>
+    </div>
+</body>
+<script src={{url_for('static', filename='js/jquery.js')}}></script>
+<script src={{url_for('static', filename='js/bootstrap.min.js')}}></script>
+<script type="text/javascript">
+    window.setInterval(add, 3000);
+    function add(){
+        var mdtext = $("#in").val();
+        $.post("{{url_for('convert_md')}}", {"html_text": mdtext}, function(data){
+            if(data.result != "None"){
+                $("#out").html(data.result)
+            };
+        });
+    };
+</script>
+</html>
